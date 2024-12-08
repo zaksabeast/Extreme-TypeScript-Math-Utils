@@ -2,6 +2,7 @@ import { Test } from "ts-toolbelt";
 import type { Digit } from "./digit";
 import type { SplitStringIntoChars, Repeat, StringToNumber } from "./string";
 import type { Add, SumStrings } from "./add";
+import type { BinAnd } from "./bin";
 
 type ProductMap = {
   "0": {
@@ -191,7 +192,10 @@ export type Mult<A extends number, B extends number> = StringToNumber<
   MultStrings<`${A}`, `${B}`>
 >;
 
-type Test = Mult<0xfffff, 0xfffff>;
+export type MultU32<A extends number, B extends number> = BinAnd<
+  Mult<A, B>,
+  0xffffffff
+>;
 
 Test.checks([
   Test.check<Append0sToList<["1", "2", "3"]>, ["1", "20", "300"], Test.Pass>(),
@@ -211,4 +215,6 @@ Test.checks([
   Test.check<Mult<123, 0>, 0, Test.Pass>(),
   Test.check<Mult<0xabc, 0xdef>, 0x959184, Test.Pass>(),
   Test.check<Mult<0xfffff, 0xfffff>, 0xffffe00001, Test.Pass>(),
+
+  Test.check<MultU32<90, 0xb8e38e39>, 10, Test.Pass>(),
 ]);

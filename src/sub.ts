@@ -1,6 +1,11 @@
 import { Test } from "ts-toolbelt";
 import type { Digit } from "./digit";
-import type { Pad0, RemovePad0, StringToNumber, ReverseString } from "./string";
+import type {
+  AutoPad0,
+  RemovePad0,
+  StringToNumber,
+  ReverseString,
+} from "./string";
 import type { GreaterThanOrEq } from "./greaterThan";
 
 type DigitSubMapWithoutBorrow = {
@@ -199,7 +204,10 @@ type SubStrings<
   : never;
 
 export type _Sub<A extends number, B extends number> = RemovePad0<
-  SubStrings<ReverseString<Pad0<`${A}`, 16>>, ReverseString<Pad0<`${B}`, 16>>>
+  SubStrings<
+    ReverseString<AutoPad0<`${A}`, `${B}`>>,
+    ReverseString<AutoPad0<`${B}`, `${A}`>>
+  >
 >;
 
 export type Sub<A extends number, B extends number> = GreaterThanOrEq<

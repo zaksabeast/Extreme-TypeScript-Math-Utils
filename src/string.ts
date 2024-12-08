@@ -28,9 +28,25 @@ export type ReverseString<
   ? ReverseString<Rest, `${Char}${Acc}`>
   : Acc;
 
+export type GreaterStringLength<
+  A extends string,
+  B extends string
+> = A extends `${infer _AChar}${infer ARest}`
+  ? B extends `${infer _BChar}${infer BRest}`
+    ? GreaterStringLength<ARest, BRest>
+    : true
+  : false;
+
 export type Pad0<S extends string, N extends number> = StringLength<S> extends N
   ? S
   : Pad0<`0${S}`, N>;
+
+export type AutoPad0<A extends string, B extends string> = GreaterStringLength<
+  A,
+  B
+> extends true
+  ? A
+  : Pad0<A, StringLength<B>>;
 
 export type RemovePad0<S extends string> = S extends `0${infer Rest}`
   ? RemovePad0<Rest>

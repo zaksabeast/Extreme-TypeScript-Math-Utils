@@ -1,6 +1,6 @@
 import { Test } from "ts-toolbelt";
 import type { Digit } from "./digit";
-import type { Pad0 } from "./string";
+import type { AutoPad0 } from "./string";
 
 type GreaterThanMap = [
   [false, false, false, false, false, false, false, false, false, false],
@@ -33,7 +33,7 @@ type __GreaterThan<
   A extends number | string,
   B extends number | string,
   OrEqual extends boolean
-> = _GreaterThan<Pad0<`${A}`, 16>, Pad0<`${B}`, 16>, OrEqual>;
+> = _GreaterThan<AutoPad0<`${A}`, `${B}`>, AutoPad0<`${B}`, `${A}`>, OrEqual>;
 
 export type GreaterThan<
   A extends number | string,
@@ -49,6 +49,8 @@ Test.checks([
   Test.check<GreaterThan<0, 0>, false, Test.Pass>(),
   Test.check<GreaterThan<123, 321>, false, Test.Pass>(),
   Test.check<GreaterThan<321, 123>, true, Test.Pass>(),
+  Test.check<GreaterThan<1000, 100>, true, Test.Pass>(),
+  Test.check<GreaterThan<100, 1000>, false, Test.Pass>(),
 
   Test.check<GreaterThan<"0", "0">, false, Test.Pass>(),
   Test.check<GreaterThan<"123", "321">, false, Test.Pass>(),
