@@ -187,6 +187,7 @@ Test.checks([
 
   Test.check<Base2To10<"1100">, 12, Test.Pass>(),
   Test.check<Base2To10<"11111">, 31, Test.Pass>(),
+  Test.check<Base2To10<"1010101010111011">, 0xaabb, Test.Pass>(),
   Test.check<Base2To10<"101">, 5, Test.Pass>(),
   Test.check<
     Base2To10<"11111111111111111111111111111111">,

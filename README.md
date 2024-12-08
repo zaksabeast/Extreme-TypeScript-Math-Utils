@@ -17,12 +17,28 @@ A set of math utilities for the TypeScript type system, inspired by [ts-toolbelt
 ```ts
 Test.check<Add<123, 321>, 444, Test.Pass>();
 Test.check<Add<0xffff0000, 0xffff>, 0xffffffff, Test.Pass>();
+Test.check<Add<0xffffffffffff, 0xffffffffffff>, 0x1fffffffffffe, Test.Pass>();
 
 Test.check<Sub<321, 123>, 198, Test.Pass>();
 Test.check<Sub<12, 22>, -10, Test.Pass>();
 
 Test.check<Mult<123, 456>, 56088, Test.Pass>();
-Test.check<Mult<0xfffff, 0xfffff>, 0xffffe00001, Test.Pass>(;
+Test.check<Mult<0xfffff, 0xfffff>, 0xffffe00001, Test.Pass>();
+
+Test.check<DivU32SingleDigit<99872, 6>, 16646, Test.Pass>();
+Test.check<DivU32SingleDigit<0xfffffff0, 0x2>, 0x7ffffff8, Test.Pass>();
+
+Test.check<ToU16<-0xaabbccdd>, 0x3323, Test.Pass>();
+Test.check<ToU32<-0xaabbccdd>, 0x55443323, Test.Pass>();
+
+Test.check<Base10To2<0xaabb>, "1010101010111011", Test.Pass>();
+Test.check<Base2To10<"1010101010111011">, 0xaabb, Test.Pass>();
+
+Test.check<BitAnd<"1010", "1100">, "1000", Test.Pass>();
+Test.check<BitOr<"1010", "1100">, "1110", Test.Pass>();
+
+Test.check<BinOr<10, 12>, 14, Test.Pass>();
+Test.check<BinAnd<0xaabb, 0xff>, 0xbb, Test.Pass>();
 ```
 
 ## Limitations
